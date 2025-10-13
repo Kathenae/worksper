@@ -1,5 +1,5 @@
 "use client"
-import { useLanguage } from '@/contexts/LanguageContext';
+import { useLanguage } from '@/hooks/use-language';
 import { Code2, Palette, TrendingUp } from 'lucide-react';
 
 const Services = () => {

@@ -1,5 +1,5 @@
 "use client"
-import { useLanguage } from '@/contexts/LanguageContext';
+import { useLanguage } from '@/hooks/use-language';
 
 const Customers = () => {
     const { t } = useLanguage();

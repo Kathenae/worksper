@@ -1,5 +1,6 @@
 "use client"
-import { useLanguage } from '@/contexts/LanguageContext';
+
+import { useLanguage } from "@/hooks/use-language";
 
 const Hero = () => {
     const { t } = useLanguage();

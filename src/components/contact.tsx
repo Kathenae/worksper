@@ -1,5 +1,5 @@
 "use client"
-import { useLanguage } from '@/contexts/LanguageContext';
+import { useLanguage } from '@/hooks/use-language';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -16,16 +16,19 @@ import {
 } from '@/components/ui/form';
 import { toast } from 'sonner';
 
-const contactSchema = z.object({
-    name: z.string().trim().min(1, { message: 'Name is required' }).max(100),
-    email: z.string().trim().email({ message: 'Invalid email address' }).max(255),
-    message: z.string().trim().min(1, { message: 'Message is required' }).max(1000),
-});
 
-type ContactFormValues = z.infer<typeof contactSchema>;
 
 const Contact = () => {
     const { t } = useLanguage();
+
+    type ContactFormValues = z.infer<typeof contactSchema>;
+
+    const contactSchema = z.object({
+        name: z.string().trim().min(1, { message: t('contact.name-required') }).max(100),
+        email: z.string().trim().email({ message: t('contact.invalid-email') }).max(255),
+        message: z.string().trim().min(1, { message: t('contact.message-required') }).max(1000),
+    });
+
 
     const form = useForm<ContactFormValues>({
         resolver: zodResolver(contactSchema),
@@ -39,7 +42,7 @@ const Contact = () => {
     const onSubmit = (data: ContactFormValues) => {
         const subject = encodeURIComponent(`Contact from ${data.name}`);
         const body = encodeURIComponent(`Name: ${data.name}\nEmail: ${data.email}\n\nMessage:\n${data.message}`);
-        window.location.href = `mailto:hello@worksper.com?subject=${subject}&body=${body}`;
+        // window.location.href = `mailto:hello@worksper.com?subject=${subject}&body=${body}`;
 
         toast(t('contactSuccess'));
 

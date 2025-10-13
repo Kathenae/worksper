@@ -1,8 +1,8 @@
 "use client"
-import { useLanguage } from "@/contexts/LanguageContext";
+import { useLanguage } from "@/hooks/use-language";
 
 const About = () => {
-    const { t, language } = useLanguage();
+    const { t } = useLanguage();
 
     return (
         <section id="about" className="min-h-screen flex items-center justify-center px-6 py-20 bg-secondary">

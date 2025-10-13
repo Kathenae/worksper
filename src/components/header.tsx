@@ -1,15 +1,26 @@
 "use client"
-import { useLanguage } from '@/contexts/LanguageContext';
 import { Button } from '@/components/ui/button';
+import { usePathname } from 'next/navigation';
+import Link from 'next/link';
+import { useLanguage } from '@/hooks/use-language';
+import { Locale } from '@/dictionary';
 
 const Header = () => {
-    const { language, setLanguage, t } = useLanguage();
+    const { t, lang } = useLanguage();
 
     const scrollToSection = (id: string) => {
         const element = document.getElementById(id);
         if (element) {
             element.scrollIntoView({ behavior: 'smooth' });
         }
+    };
+
+    const pathname = usePathname();
+    const redirectedPathname = (locale: Locale) => {
+        if (!pathname) return "/";
+        const segments = pathname.split("/");
+        segments[1] = locale;
+        return segments.join("/");
     };
 
     return (
@@ -45,20 +56,24 @@ const Header = () => {
 
                         <div className="flex items-center gap-2 ml-4 border-l border-border pl-4">
                             <Button
-                                variant={language === 'en' ? 'default' : 'ghost'}
+                                variant={lang === 'en' ? 'default' : 'ghost'}
                                 size="sm"
-                                onClick={() => setLanguage('en')}
                                 className="text-xs font-light h-7 px-3"
+                                asChild
                             >
-                                EN
+                                <Link href={redirectedPathname('en')}>
+                                    EN
+                                </Link>
                             </Button>
                             <Button
-                                variant={language === 'pt' ? 'default' : 'ghost'}
+                                variant={lang === 'pt' ? 'default' : 'ghost'}
                                 size="sm"
-                                onClick={() => setLanguage('pt')}
                                 className="text-xs font-light h-7 px-3"
+                                asChild
                             >
-                                PT
+                                <Link href={redirectedPathname('pt')}>
+                                    PT
+                                </Link>
                             </Button>
                         </div>
                     </div>
