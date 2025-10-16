@@ -23,10 +23,7 @@ export const metadata: Metadata = {
 export default async function RootLayout({
   children,
   params
-}: Readonly<{
-  children: React.ReactNode;
-  params: Promise<{ lang: Locale }>
-}>) {
+}: LayoutProps<"/[lang]">) {
   const { lang } = await params;
   const dict = await dictionary(lang as Locale)
 
@@ -35,7 +32,7 @@ export default async function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <LanguageProvider lang={lang} dict={dict}>
+        <LanguageProvider lang={lang as Locale} dict={dict}>
           <Toaster />
           {children}
         </LanguageProvider>
