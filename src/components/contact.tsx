@@ -15,19 +15,14 @@ import {
     FormMessage,
 } from '@/components/ui/form';
 import { toast } from 'sonner';
-
-
+import { ContactSchema } from './contact-schema';
 
 const Contact = () => {
     const { t } = useLanguage();
 
     type ContactFormValues = z.infer<typeof contactSchema>;
 
-    const contactSchema = z.object({
-        name: z.string().trim().min(1, { message: t('contact.name-required') }).max(100),
-        email: z.string().trim().email({ message: t('contact.invalid-email') }).max(255),
-        message: z.string().trim().min(1, { message: t('contact.message-required') }).max(1000),
-    });
+    const contactSchema = ContactSchema(t)
 
 
     const form = useForm<ContactFormValues>({
@@ -39,14 +34,19 @@ const Contact = () => {
         },
     });
 
-    const onSubmit = (data: ContactFormValues) => {
-        const subject = encodeURIComponent(`Contact from ${data.name}`);
-        const body = encodeURIComponent(`Name: ${data.name}\nEmail: ${data.email}\n\nMessage:\n${data.message}`);
-        // window.location.href = `mailto:hello@worksper.com?subject=${subject}&body=${body}`;
+    const onSubmit = async (data: ContactFormValues) => {
 
-        toast(t('contactSuccess'));
+        const response = await fetch("/api/contact", {
+            method: 'POST',
+            body: JSON.stringify(data)
+        })
 
-        form.reset();
+        if (response.status == 200) {
+            toast(t('contactSuccess'));
+            form.reset();
+        } else {
+            toast(t("contact.error"))
+        }
     };
 
     return (

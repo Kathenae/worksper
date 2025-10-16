@@ -7,6 +7,7 @@ const dictionaries = {
 
 // Types
 export type Locale = keyof typeof dictionaries
+export type DictionaryWord = keyof typeof defaultDict
 export type LanguageDictionary = Record<keyof typeof defaultDict, string>
 
 // Constants

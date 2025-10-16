@@ -38,6 +38,7 @@ const dict = {
     'contact.name-required': "Name required",
     'contact.invalid-email': "Invalid email Address",
     'contact.message-required': "Message required",
+    'contact.error': "unable to send your message",
 
     // Footer
     footerText: 'A web development agency focused on minimalist design and quality craftsmanship.',
