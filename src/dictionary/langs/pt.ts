@@ -39,6 +39,7 @@ const dict: LanguageDictionary = {
     'contact.name-required': 'Preencha seu nome',
     'contact.message-required': 'Escreva a sua mensagem',
     'contact.invalid-email': 'Email inválido',
+    "contact.error": "Não foi possivel enviar a sua mensagem",
 
     // Footer
     footerText: 'Uma agência de desenvolvimento web focada em design minimalista e artesanato de qualidade.',
